@@ -13,10 +13,10 @@ await readFileLine(input, (line) => {
   }
 
   if (readRules) {
-    let [page, before] = line.split('|');
+    let [page, rule] = line.split('|');
     let arr = rules.get(page) || [];
 
-    arr = arr.concat(before);
+    arr.push(rule);
     rules.set(page, arr);
   } else {
     updates.push(line.split(','));
@@ -28,32 +28,28 @@ const invalid = [];
 
 const isPageValid = (update, index) => {
   const page = update[index];
-  const rule = rules.get(page);
+  const pageRules = rules.get(page) || [];
   const before = update.slice(0, index);
 
-  if (!rule || !before.length) {
-    return true;
+  for (const rule of pageRules) {
+    if (before.includes(rule)) {
+      return false;
+    }
   }
 
-  return before.every((page) => {
-    return !rule.includes(page);
-  });
+  return true;
 };
 
 const midSum = (updates) => {
   return updates.reduce((sum, pages) => {
-    const midIndex = Math.floor(pages.length / 2);
-    return sum + Number(pages[midIndex]);
+    const half = Math.floor(pages.length / 2);
+    return sum + Number(pages[half]);
   }, 0);
 };
 
-/**
- * Part 1
- */
-
 updates.forEach((update) => {
   for (let index in update) {
-    let isValid = isPageValid(update, index);
+    const isValid = isPageValid(update, index);
 
     if (!isValid) {
       invalid.push(update);
@@ -64,6 +60,11 @@ updates.forEach((update) => {
   valid.push(update);
 });
 
+/**
+ * Part 1
+ */
+
+// 5208
 console.log('Mid pages sum: %d', midSum(valid));
 
 /**
@@ -87,4 +88,5 @@ const sorted = invalid.map((update) => {
   return sorted;
 });
 
+// 6732
 console.log('Sorted mid pages sum: %d', midSum(sorted));
