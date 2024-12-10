@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import readFileLine from '../read-file-line.js';
+import { readFileLine } from '../utils.js';
 
 const input = join(import.meta.dirname, './input.txt');
 

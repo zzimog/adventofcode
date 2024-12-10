@@ -1,7 +1,7 @@
 import { createReadStream } from 'node:fs';
 import { createInterface } from 'node:readline';
 
-export default function (path, callback) {
+export function readFileLine(path, callback) {
   return new Promise((resolve) => {
     const stream = createReadStream(path, 'utf8');
 
@@ -13,4 +13,10 @@ export default function (path, callback) {
     lines.on('line', callback);
     lines.on('close', resolve);
   });
+}
+
+export async function getFileLines(path) {
+  const lines = [];
+  await readFileLine(path, (line) => lines.push(line));
+  return lines;
 }

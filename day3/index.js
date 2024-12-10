@@ -23,4 +23,4 @@ const doMultSum = input
     return (sum += arg1 * arg2);
   }, 0);
 
-console.log('Sum: ', doMultSum);
+console.log("Sum do/don't: %d", doMultSum);
