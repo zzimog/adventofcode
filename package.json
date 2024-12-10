@@ -1,0 +1,7 @@
+{
+  "name": "@zzimog/adventofcode",
+  "version": "1.0.0",
+  "author": "zzimog",
+  "main": "index.js",
+  "type": "module"
+}
