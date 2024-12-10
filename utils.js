@@ -20,3 +20,12 @@ export async function getFileLines(path) {
   await readFileLine(path, (line) => lines.push(line));
   return lines;
 }
+
+export function isInBound(val, min, max = null) {
+  if (max === null) {
+    max = min;
+    min = 0;
+  }
+
+  return val >= min && val < max;
+}
