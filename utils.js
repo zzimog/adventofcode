@@ -4,20 +4,22 @@ import { createInterface } from 'node:readline';
 export function readFileLine(path, callback) {
   return new Promise((resolve) => {
     const stream = createReadStream(path, 'utf8');
-
     const lines = createInterface({
       input: stream,
       crlfDelay: Infinity,
     });
 
-    lines.on('line', callback);
+    let count = 0;
+    lines.on('line', (line) => callback(line, count++));
     lines.on('close', resolve);
   });
 }
 
-export async function getFileLines(path) {
+export async function getFileLines(path, parse) {
   const lines = [];
-  await readFileLine(path, (line) => lines.push(line));
+  await readFileLine(path, (line) => {
+    lines.push(parse ? parse(line, lines.length) : line);
+  });
   return lines;
 }
 
