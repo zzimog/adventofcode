@@ -31,3 +31,18 @@ export function isInBound(val, min, max = null) {
 
   return val >= min && val < max;
 }
+
+export const getMapSize = (map) => {
+  const rows = map.length;
+  const cols = map[0].length;
+
+  return [rows, cols];
+};
+
+export const cloneMap = (map) => {
+  const newMap = [];
+  for (const row of map) {
+    newMap.push([...row]);
+  }
+  return newMap;
+};

@@ -8,12 +8,13 @@
  *     +1
  */
 
-const calcDelta = (direct) => {
-  const dr = -1 * Math.round(Math.sin(direct * (Math.PI / 180)));
-  const dc = Math.round(Math.cos(direct * (Math.PI / 180)));
-
-  return { dr, dc };
-};
+// [vertical, horizontal]
+const Directions = [
+  [-1, 0],
+  [0, 1],
+  [1, 0],
+  [0, -1],
+];
 
 export default class Guard {
   constructor() {
@@ -21,7 +22,7 @@ export default class Guard {
     this.col = null;
 
     // start facing up
-    this.direction = 90;
+    this.direction = 0;
   }
 
   get position() {
@@ -32,26 +33,17 @@ export default class Guard {
   }
 
   set(row, col) {
-    this.row = row;
-    this.col = col;
+    this.row = parseInt(row);
+    this.col = parseInt(col);
   }
 
   turnRight() {
-    let dir = this.direction - 90 || 360;
-    this.direction = dir;
+    let dir = this.direction;
+    this.direction = dir == 3 ? 0 : dir + 1;
   }
 
   getFrontCoords() {
-    const { dr, dc } = calcDelta(this.direction);
-    const row = this.row + dr;
-    const col = this.col + dc;
-
-    return [row, col];
-  }
-
-  getRightCoords() {
-    const direct = this.direction - 90 || 360;
-    const { dr, dc } = calcDelta(direct);
+    const [dr, dc] = Directions[this.direction];
     const row = this.row + dr;
     const col = this.col + dc;
 
