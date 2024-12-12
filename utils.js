@@ -1,6 +1,13 @@
 import { createReadStream } from 'node:fs';
 import { createInterface } from 'node:readline';
 
+export const Directions = Object.freeze([
+  [-1, 0],
+  [0, +1],
+  [1, 0],
+  [0, -1],
+]);
+
 export function readFileLine(path, callback) {
   return new Promise((resolve) => {
     const stream = createReadStream(path, 'utf8');
