@@ -1,11 +1,26 @@
 import { createReadStream } from 'node:fs';
 import { createInterface } from 'node:readline';
 
+//    -1
+// -1 .. +1
+//    +1
+// [row, col]
 export const Directions = Object.freeze([
-  [-1, 0],
-  [0, +1],
-  [1, 0],
-  [0, -1],
+  [-1, 0], // 0 up
+  [0, +1], // 1 right
+  [+1, 0], // 2 down
+  [0, -1], // 3 left
+]);
+
+// -1,-1 | -1,+1
+// ------+------
+// +1,-1 | +1,+1
+// [row, col]
+export const Diagonals = Object.freeze([
+  [-1, -1], // 0 up-left
+  [-1, +1], // 1 up-right
+  [+1, -1], // 2 down-left
+  [+1, +1], // 3 down-right
 ]);
 
 export function readFileLine(path, callback) {

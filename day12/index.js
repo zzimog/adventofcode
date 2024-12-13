@@ -1,52 +1,41 @@
 import { join } from 'node:path';
-import {
-  cloneMap,
-  Directions,
-  getFileLines,
-  getMapSize,
-  isInBound,
-} from '../utils.js';
-import Plant from './Plant.js';
+import { getFileLines } from '../utils.js';
+import getRegions from './getRegions.js';
 
 const input = join(import.meta.dirname, './test.txt');
 const garden = await getFileLines(input, (l) => l.split(''));
-
-const [ROWS, COLS] = getMapSize(garden);
-const isValidPos = (row, col) => {
-  return isInBound(row, ROWS) && isInBound(col, COLS);
-};
+const regions = getRegions(garden);
 
 /**
  * Part 1
  */
 
-const visited = cloneMap(garden);
-const plants = [];
-let price = 0;
+// expected for test.txt -> 1930
+const sum1 = regions.reduce((sum, region) => {
+  const A = region.plants.length;
+  const P = region.plants.reduce((p, plant) => {
+    return (p += plant.perimeter);
+  }, 0);
+  return (sum += A * P);
+}, 0);
 
-for (const i in garden) {
-  for (const j in garden[i]) {
-    let row = Number(i);
-    let col = Number(j);
-    let char = garden[row][col];
-    let plant = new Plant(char, row, col);
+console.log('Part 1, sum: %d', sum1);
 
-    for (const [dR, dC] of Directions) {
-      const nextRow = row + dR;
-      const nextCol = col + dC;
+/**
+ * Part 2
+ */
 
-      if (isValidPos(nextRow, nextCol)) {
-        const nextChar = garden[nextRow][nextCol];
+// expected for test.txt -> 1206
+const sum2 = 0;
+regions[0].plants.forEach((plant) => {
+  let matrix = [
+    [0, 0, 0],
+    [0, 1, 0],
+    [0, 0, 0],
+  ];
 
-        if (char == nextChar) {
-          plant.adj++;
-        }
-      }
-    }
+  plant.adj.forEach(([dR, dC]) => (matrix[1 + dR][1 + dC] = 1));
+  plant.diag.forEach(([dR, dC]) => (matrix[1 + dR][1 + dC] = 1));
 
-    plants.push(plant);
-    price += 4 - plant.adj;
-  }
-}
-
-console.log(price);
+  console.table(matrix);
+});
