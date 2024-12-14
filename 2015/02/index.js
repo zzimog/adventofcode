@@ -13,15 +13,15 @@ const paperArea = boxes.reduce((sum, [l, w, h]) => {
   return sum + 2 * l1 + 2 * l2 + 2 * l3 + smallest;
 }, 0);
 
-console.log(paperArea);
-
 const ribbonLenght = boxes.reduce((sum, box) => {
   const sizes = [...box]
   const max = Math.max.apply(null, sizes);
   sizes.splice(sizes.indexOf(max), 1);
+
   const [s1, s2] = sizes;
 
   return sum + (s1 + s2) * 2 + box.reduce((m, s) => m * s, 1);
 }, 0);
 
+console.log(paperArea);
 console.log(ribbonLenght);
