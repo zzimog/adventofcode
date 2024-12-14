@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { getFileLines } from '../utils.js';
+import { getFileLines } from '../../utils.js';
 import verify1 from './verify1.js';
 import verify2 from './verify2.js';
 

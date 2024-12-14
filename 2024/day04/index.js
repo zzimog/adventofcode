@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { getFileLines, isInBound } from '../utils.js';
+import { getFileLines, isInBound } from '../../utils.js';
 
 const input = join(import.meta.dirname, './input.txt');
 const lines = (await getFileLines(input)).map((l) => l.split(''));

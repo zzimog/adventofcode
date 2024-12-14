@@ -1,4 +1,4 @@
-import { cloneMap, isInBound } from '../utils.js';
+import { cloneMap, isInBound } from '../../utils.js';
 import Point from './Point.js';
 
 export default function (map, ROWS, COLS, antennas) {

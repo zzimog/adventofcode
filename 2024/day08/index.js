@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { getFileLines, getMapSize } from '../utils.js';
+import { getFileLines, getMapSize } from '../../utils.js';
 import Point from './Point.js';
 import count1 from './count1.js';
 import count2 from './count2.js';

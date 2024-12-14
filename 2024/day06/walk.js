@@ -1,4 +1,4 @@
-import { isInBound, getMapSize, cloneMap } from '../utils.js';
+import { isInBound, getMapSize, cloneMap } from '../../utils.js';
 import Guard from './Guard.js';
 
 const getStartPoint = (map) => {
