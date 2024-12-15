@@ -63,8 +63,24 @@ export const getMapSize = (map) => {
 
 export const cloneMap = (map) => {
   const newMap = [];
+
   for (const row of map) {
     newMap.push([...row]);
   }
+
   return newMap;
+};
+
+export const getEmptyMap = (rows, cols, fill = null) => {
+  const map = [];
+
+  for (let i = 0; i < rows; i++) {
+    map[i] = [];
+
+    for (let j = 0; j < cols; j++) {
+      map[i][j] = fill;
+    }
+  }
+
+  return map;
 };
