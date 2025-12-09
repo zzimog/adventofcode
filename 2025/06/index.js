@@ -13,10 +13,8 @@ async function sum1() {
 
   const values = lines.slice(0, -1);
   const operators = lines[lines.length - 1];
-  const length = operators.length;
 
-  return Array.from({ length }).reduce((sum, _, i) => {
-    const op = operators[i];
+  return operators.reduce((sum, op, i) => {
     let tmp = op === '+' ? 0 : 1;
 
     for (const col of values) {
@@ -44,13 +42,8 @@ async function sum2() {
     return line.split('').reverse().join('');
   });
 
+  const values = lines.slice(0, -1).map((l) => l.split(''));
   const operators = lines[lines.length - 1].replace(/\s*/g, '').split('');
-
-  const values = lines
-    .slice(0, -1)
-    .reverse()
-    .map((l) => l.split(''))
-    .reverse();
 
   const newValues = [];
   let group = [];
