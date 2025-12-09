@@ -1,14 +1,14 @@
-import { getFileLines } from '../../utils.js';
+import { getFileLines, getEmptyMap } from '../../utils.js';
+import { pointInPolygon } from './point-in-polygon.js';
 
-const coords = await getFileLines('./input.txt', (line) => {
-  const [col, row] = line.split(',');
-  return [row, col];
+const polygon = await getFileLines('./test.txt', (line) => {
+  return line.split(',');
 });
 
-function getArea([r1, c1], [r2, c2]) {
-  const h = Math.abs(r1 - r2) + 1;
-  const w = Math.abs(c1 - c2) + 1;
-  return h * w;
+function getArea([x1, y1], [x2, y2]) {
+  const w = Math.abs(x1 - x2) + 1;
+  const h = Math.abs(y1 - y2) + 1;
+  return w * h;
 }
 
 /**
@@ -18,9 +18,9 @@ function getArea([r1, c1], [r2, c2]) {
 function max() {
   const areas = [];
 
-  for (let i = 0; i < coords.length - 1; i++) {
-    for (let j = i + 1; j < coords.length; j++) {
-      const area = getArea(coords[i], coords[j]);
+  for (let i = 0; i < polygon.length - 1; i++) {
+    for (let j = i + 1; j < polygon.length; j++) {
+      const area = getArea(polygon[i], polygon[j]);
       areas.push(area);
     }
   }
@@ -29,3 +29,21 @@ function max() {
 }
 
 console.log(max());
+
+/**
+ * Part 2
+ */
+
+const testMap = getEmptyMap(20, 20, '.');
+
+for (let y = 0; y < 20; y++) {
+    for (let x = 0; x < 20; x++) {
+    if (pointInPolygon(polygon, [x, y])) {
+      testMap[y][x] = 'X';
+    }
+  }
+}
+
+for (const line of testMap) {
+  console.log(line.join(''));
+}
